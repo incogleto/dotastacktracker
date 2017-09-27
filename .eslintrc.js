@@ -6,7 +6,8 @@ module.exports = {
     },
     "extends": "eslint:recommended",
     "parserOptions": {
-        "sourceType": "module"
+        "sourceType": "module",
+        "ecmaVersion": 8
     },
     "rules": {
         "indent": [
@@ -22,7 +23,7 @@ module.exports = {
             "always"
         ],
         "no-console": [
-            "off"
+            "warn"
         ],
         "no-redeclare": [
             "off"
