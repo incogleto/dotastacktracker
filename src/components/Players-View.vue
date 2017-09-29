@@ -1,10 +1,9 @@
 <template>
 	<div class='players'>
-		<player v-bind:playerId="''+7656+$store.state.fam[0]"></player> 
-		<player v-bind:playerId="''+7656+$store.state.fam[1]"></player>
-		<player v-bind:playerId="''+7656+$store.state.fam[2]"></player>
-		<player v-bind:playerId="''+7656+$store.state.fam[3]"></player>
-		<player v-bind:playerId="''+7656+$store.state.fam[4]"></player>
+		<player v-for="(player, index) in players" 
+				:playerId="$store.state.fam[index].id" 
+				:pos="index"
+				:key="index"></player>
 	</div>
 </template>
 
@@ -14,6 +13,17 @@ import Player from './Player';
 export default {
 	components: {
 		Player
+	},
+	data() {
+		return {
+		players: [
+			{id: 0},
+			{id: 1},
+			{id: 2},
+			{id: 3},
+			{id: 4},
+		]
+		}
 	}
 }
 </script>

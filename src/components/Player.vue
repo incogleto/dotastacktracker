@@ -1,7 +1,7 @@
 <template>
-	<div class="player">
-		<h1>{{playerName}}</h1>
-		<img v-bind:src="avatar"></img>
+	<div class="player" v-on:click="toggleActive">
+		<h2>{{playerName}}</h2>
+		<img class="avatar" v-bind:class="{active:isActive}" v-bind:src="avatar"></img>
 	</div>
 </template>
 
@@ -16,18 +16,41 @@ export default {
 		}
 	},
 	props: [
-		'playerId'
+		'playerId', 'pos'
 	],
 	asyncComputed: {
 		async playerName (){
-			return getPlayerSummary(this.playerId).then((data)=>{
-				return data.personaname;
-			})
+			return this.$store.state.fam[this.pos].data.personaname;
 		},
 		async avatar (){
-			return getPlayerSummary(this.playerId).then((data)=>{
-				return data.avatarfull;
-			})
+			return this.$store.state.fam[this.pos].data.avatarfull;
+		}
+	},
+	computed: {
+		mask(){
+			var flag;
+			if(this.pos == 0)
+				flag = 16;
+			if(this.pos == 1)
+				flag = 8
+			if(this.pos == 2)
+				flag = 4
+			if(this.pos == 3)
+				flag = 2
+			if(this.pos == 4)
+				flag = 1
+			return flag;
+		},
+		isActive(){
+			console.log(this.$store.state.activeFlag);
+			return (this.$store.state.activeFlag & this.mask);
+		}
+	},
+	methods: {
+		toggleActive(){
+			var flag = this.$store.state.activeFlag ^ this.mask;
+			this.$store.commit("SET_ACTIVEFLAG", flag);
+			this.$forceUpdate();
 		}
 	}
 }
@@ -36,7 +59,21 @@ export default {
 <style scoped>
 .player{
 	min-width: 300px;
-	border: 1px solid grey;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	margin: 0 auto;
+	margin-top: 20px;
+	text-align: center;
+	color: #C1CCC2;
+	background-color: #242F39;
+	padding-bottom: 10px;
 }
+
+.avatar, :not(.active){
+	filter: grayscale(100%);
+}
+
+.active{
+	filter: none;
+}
+
 </style>
