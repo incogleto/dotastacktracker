@@ -1,4 +1,4 @@
-const baseURL = 'localhost:8081/api';
+const baseURL = '67.205.132.235:8081/api';
 
 export const getPlayerHistory = async (playerId) => {
 	const json = await fetch(`http://${baseURL}/getPlayerHistory/${playerId}`).then(r => r.json());
