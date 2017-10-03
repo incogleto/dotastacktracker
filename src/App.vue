@@ -2,8 +2,11 @@
   <div id="app">
     <nav class="nav"><div id="title">DotaStackTracker</div></nav>
     <!--<router-view></router-view>-->
-    <Players></Players>
-    <Matches></Matches>
+		<div class="content">
+    	<Players></Players>
+    	<Matches></Matches>
+		</div>
+		<vue-progress-bar></vue-progress-bar>
   </div>
 </template>
 
@@ -26,15 +29,30 @@ export default {
   },
 	methods: {
     async populateFam(){
-      var data, history;
+			this.$Progress.start();
+			var data, history;
+			var ids = '';
 			for (var index = 0; index < this.$store.state.fam.length; index++) {
 				var fam = this.$store.state.fam;
-				data = await getPlayerSummary(this.$store.state.fam[index].id);
-        fam[index].data = data;
+				ids+=this.$store.state.fam[index].id;
+				if(index < this.$store.state.fam.length-1)
+					ids+=','
 				history = await getPlayerHistory(this.$store.state.fam[index].id);
 				fam[index].matchHistory = history;
 				if(data) this.$store.commit('SET_FAM', fam);
-      }
+				this.$Progress.increase(10);
+			}
+			console.log(ids);
+			data = await getPlayerSummary(ids);
+			for (var index = 0; index < this.$store.state.fam.length; index++) {
+				var fam = this.$store.state.fam;
+				console.log(data);
+				fam[index].data = data[index];
+				this.$store.commit('SET_FAM', fam);
+				this.$Progress.increase(10);
+			}
+			this.$Progress.finish();
+			this.$store.commit('SET_LOADED', true);
       this.buildList();
     },
 		buildList(){
@@ -83,12 +101,25 @@ body{
     margin: 0;
 }
 
+.content{
+	width: 100%;
+	margin: 0 15px;
+}
+
+@media screen and (min-width: 1400px){
+	.content{
+		width: 60%;
+		margin: 0 auto;
+	}
+}
+
 .nav{
   font-size: 2em;
   color: #C1CCC2;
   background-color: #2c3e50;
   margin: 0;
   line-height: 2em;
+	width: 100%;
 }
 
 #title{
@@ -101,7 +132,6 @@ body{
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin: 0;
-  width: 100%;
 }
 
 .logo{

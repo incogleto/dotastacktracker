@@ -8,6 +8,6 @@ export const getPlayerHistory = async (playerId) => {
 
 export const getPlayerSummary = async (playerId) => {
 	const json = await fetch(`http://${baseURL}/player/${playerId}`).then(r => r.json());
-	if(json.response.players[0].steamid != playerId) throw new Error('Error fetching profile');
-	return json.response.players[0];
+	//if(json.response.players[0].steamid != playerId) throw new Error('Error fetching profile');
+	return json.response.players;
 };
