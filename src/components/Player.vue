@@ -1,6 +1,6 @@
 <template>
 	<div class="player" v-on:click="toggleActive">
-		<h2>{{playerName}}</h2>
+		<div class="name">{{playerName}}</div>
 		<img class="avatar" v-bind:class="{active:isActive}" v-bind:src="avatar"></img>
 	</div>
 </template>
@@ -57,15 +57,23 @@ export default {
 </script>
 
 <style scoped>
+.name{
+	font-size: 1.5em;
+	padding-bottom: 10px; 
+}
+
 .player{
-	min-width: 300px;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	margin: 0 auto;
 	margin-top: 20px;
 	text-align: center;
 	color: #C1CCC2;
 	background-color: #242F39;
-	padding-bottom: 10px;
+	padding: 10px;
+}
+
+.avatar{
+	width: 100%;
 }
 
 .avatar, :not(.active){

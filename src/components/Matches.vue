@@ -22,8 +22,7 @@ export default {
 
 <style scoped>
 .container{
-	width: 60%;
-	margin: 20px auto;
+	margin: 20px;
 	color: #C1CCC2
 }
 

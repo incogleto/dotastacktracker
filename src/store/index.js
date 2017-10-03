@@ -35,7 +35,8 @@ export default new Vuex.Store({
 		matchHistory: [],
 		filteredHistory: [],
 		activeFlag: 31,
-		uniq: true
+		uniq: true,
+		loaded: false
 	},
 	mutations: {
 		SET_HISTORY: (state, history) => {
@@ -53,6 +54,10 @@ export default new Vuex.Store({
 		SET_FAM: (state, fam) => {
 			if (fam) return state.fam = fam;
 			return state.fam = [];
+		},
+		SET_LOADED: (state, loaded) => {
+			if (loaded) return state.loaded = loaded;
+			return state.loaded = false;
 		}
 	},
 	getters: {
