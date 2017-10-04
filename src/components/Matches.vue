@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Match from "./Match";
+import Match from './Match';
 
 export default {
 	name: 'matches',
@@ -17,7 +17,7 @@ export default {
 			return this.$store.state.filteredHistory;
 		}
 	}
-}
+};
 </script>
 
 <style scoped>

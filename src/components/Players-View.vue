@@ -21,16 +21,16 @@ export default {
 	},
 	data() {
 		return {
-		players: [
-			{id: 0},
-			{id: 1},
-			{id: 2},
-			{id: 3},
-			{id: 4},
-		]
-		}
+			players: [
+				{id: 0},
+				{id: 1},
+				{id: 2},
+				{id: 3},
+				{id: 4},
+			]
+		};
 	}
-}
+};
 </script>
 
 <style scoped>

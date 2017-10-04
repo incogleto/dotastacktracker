@@ -6,24 +6,30 @@
 </template>
 
 <script>
-import {getPlayerSummary} from '@/api';
-
 export default {
-	name: "Player",
+	name: 'Player',
 	data (){
 		return {
 			
-		}
+		};
 	},
 	props: [
 		'playerId', 'pos'
 	],
 	asyncComputed: {
 		async playerName (){
-			return this.$store.state.fam[this.pos].data.personaname;
+			for (var index = 0; index < this.$store.state.fam.length; index++) {
+				if(this.playerId == this.$store.state.fam[index].id)
+					return this.$store.state.fam[index].data.personaname;
+			}
+			throw new Error('Id not found');
 		},
 		async avatar (){
-			return this.$store.state.fam[this.pos].data.avatarfull;
+			for (var index = 0; index < this.$store.state.fam.length; index++) {
+				if(this.playerId == this.$store.state.fam[index].id)
+					return this.$store.state.fam[index].data.avatarfull;
+			}
+			throw new Error('Id not found');
 		}
 	},
 	computed: {
@@ -32,28 +38,27 @@ export default {
 			if(this.pos == 0)
 				flag = 16;
 			if(this.pos == 1)
-				flag = 8
+				flag = 8;
 			if(this.pos == 2)
-				flag = 4
+				flag = 4;
 			if(this.pos == 3)
-				flag = 2
+				flag = 2;
 			if(this.pos == 4)
-				flag = 1
+				flag = 1;
 			return flag;
 		},
 		isActive(){
-			console.log(this.$store.state.activeFlag);
 			return (this.$store.state.activeFlag & this.mask);
 		}
 	},
 	methods: {
 		toggleActive(){
 			var flag = this.$store.state.activeFlag ^ this.mask;
-			this.$store.commit("SET_ACTIVEFLAG", flag);
+			this.$store.commit('SET_ACTIVEFLAG', flag);
 			this.$forceUpdate();
 		}
 	}
-}
+};
 </script>
 
 <style scoped>
